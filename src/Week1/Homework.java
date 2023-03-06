@@ -13,7 +13,7 @@ public class Homework {
         int m[][] = new int[k][k];
         int x;
 
-        String rez="";
+        StringBuilder rez= new StringBuilder(k);
         if(k>=1_000)
         {
             long startTime = System.currentTimeMillis();
@@ -24,6 +24,15 @@ public class Homework {
                     if((x+1)%k==0)
                         m[i][j]=k;
                     x++;
+                }
+            }
+            for(int i = 0; i < k ; i++)
+            {
+                rez= new StringBuilder(k);
+                for(int j = 0; j < k ; j++)
+                {
+                    rez.append(m[i][j]);
+                    rez.append(" ");
                 }
             }
             long endTime = System.currentTimeMillis();
@@ -42,11 +51,12 @@ public class Homework {
                 }
             }
             for (int i = 0; i < k; i++) {
+                rez= new StringBuilder(k);
                 for (int j = 0; j < k; j++) {
-                    rez = String.valueOf(rez + " " + m[i][j]);
+                    rez.append(m[i][j]);
+                    rez.append(" ");
                 }
                 System.out.print(rez);
-                rez = "";
                 System.out.println();
             }
         }

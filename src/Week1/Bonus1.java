@@ -34,9 +34,10 @@ public class Bonus1 {
                 System.out.print(m[i][j]+" ");
             System.out.println();
         }
-        int a[][] = new int[m.length][];
+        int a[][] = new int[n][n];
         for (int i = 0; i < n; i++)
-            a[i] = m[i].clone();
+            for(int j = 0; j < n; j++)
+                a[i][j] = m[i][j];
 
         int c[][] = new int[n][n];
 
@@ -46,9 +47,8 @@ public class Bonus1 {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     c[i][j] = 0;
-                    for (int k = 0; k < n; k++) {
+                    for (int k = 0; k < n; k++)
                         c[i][j] += a[i][k] * m[k][j];
-                    }
                     System.out.print(c[i][j] + " ");
                 }
                 System.out.println();

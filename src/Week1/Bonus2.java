@@ -23,13 +23,19 @@ public class Bonus2 {
         }
         int n =0;
         int k =0;
-        try{
+        try {
             n = Integer.parseInt(args[0]);
             k = Integer.parseInt(args[1]);
         }
         catch(NumberFormatException e) {
             System.out.println("You must provide an integer!");
             return;
+        }
+        if((n * k) % 2 != 0)
+        {
+            System.out.println(
+                    "Incorect data! Number of nodes * vertex degree should be even!");
+            System.exit(-1);
         }
         int matrix[][] = new int[n][n];
         int vertexDegree[] = new int[n];

@@ -1,6 +1,9 @@
 package Week2.Bonus;
 
 import java.util.Random;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 
 public class Main {
     static void generateLocations(Problem problem, int nrLocations)
@@ -64,20 +67,17 @@ public class Main {
             }
         }
     }
-    public static void main(String[] args) {
+
+    static void run()
+    {
         Problem problem = new Problem();
 
         Random random = new Random();
 
         Solution solution = new Solution(problem);
 
-        int nrLocations = 1000;
-        int nrRoads = 2000;
-        Runtime runtime = Runtime.getRuntime();
-
-        long initialMemory = runtime.totalMemory() - runtime.freeMemory();
-
-        long startTime = System.currentTimeMillis();
+        int nrLocations = 10000;
+        int nrRoads = 10000;
 
         generateLocations(problem, nrLocations);
         generateRoads(problem, nrRoads ,nrLocations);
@@ -110,17 +110,29 @@ public class Main {
 
         Route route = solution.findShortestRoute(start, end);
         System.out.println(route);
+    }
+    public static void main(String[] args) {
+
+        Runtime runtime = Runtime.getRuntime();
+
+        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+
+        long startTime = System.currentTimeMillis();
+
+        run();
 
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
         long finalMemory = runtime.totalMemory() - runtime.freeMemory();
 
-        long memoryUsage = finalMemory - initialMemory;
+        MemoryUsage heapMemoryUsage = memoryBean.getHeapMemoryUsage();
+        long usedMemoryInBytes = heapMemoryUsage.getUsed();
+        double usedMemoryInMB = usedMemoryInBytes / (1024.0 * 1024.0);
 
         System.out.println("The algorithm ran in a time of: " + totalTime + " ms.");
 
-        System.out.println("Memory Usage: " + memoryUsage + " bytes");
+        System.out.println("Memory Usage: " + usedMemoryInMB + " MB");
 
     }
 }

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.io7m.jgrapht:jgrapht-io:1.2.1-MODULARIZED">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/io7m/jgrapht/jgrapht-io/1.2.1-MODULARIZED/jgrapht-io-1.2.1-MODULARIZED.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/io7m/jgrapht/jgrapht-io/1.2.1-MODULARIZED/jgrapht-io-1.2.1-MODULARIZED-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/io7m/jgrapht/jgrapht-io/1.2.1-MODULARIZED/jgrapht-io-1.2.1-MODULARIZED-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

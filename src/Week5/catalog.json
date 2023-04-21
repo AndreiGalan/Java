@@ -1,0 +1,1 @@
+{"documents":[{"id":"1","name":"Document 1","path":"/path/to/document1","url":null,"tags":{"year":"2022","author":"Author 1","title":"Document 1 Title"}},{"id":"2","name":"Document 2","path":null,"url":"https://example.com/document2","tags":{"year":"2023","author":"Author 2","title":"Document 2 Title"}}]}

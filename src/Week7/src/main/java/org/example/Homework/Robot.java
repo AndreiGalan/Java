@@ -1,7 +1,6 @@
 package org.example.Homework;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Robot implements Runnable {
     private String name;
@@ -12,6 +11,8 @@ public class Robot implements Runnable {
     private Exploration explore;
     private SharedMemory sharedMemory;
     private final Object lock = new Object();
+    private int addedTokens = 0;
+    private Queue<Cell> queue;
 
 
     public Robot(String name, Exploration explore) {
@@ -22,9 +23,11 @@ public class Robot implements Runnable {
         this.indefinitePause = false;
         this.pauseDuration = 0;
         sharedMemory = explore.getSharedMemory();
+        this.queue = new LinkedList<>();
     }
 
     public void stop() {
+        System.out.println("Robot " + name + " stopped.");
         this.running = false;
     }
 
@@ -42,6 +45,16 @@ public class Robot implements Runnable {
         }
     }
 
+    public void increaseTokens()
+    {
+        this.addedTokens += 1;
+    }
+
+    public int getAddedTokens()
+    {
+        return this.addedTokens;
+    }
+
     @Override
     public void run() {
         while (running) {
@@ -54,18 +67,45 @@ public class Robot implements Runnable {
                     }
                 }
             } else {
+                int currentrow = (int) (Math.random() * explore.getMap().getRows());
+                int currentcol = (int) (Math.random() * explore.getMap().getCols());
+                List<Cell> frontier = new ArrayList<>(); // list of cells to explore
+                frontier.add(explore.getMap().getCell(currentrow, currentcol));
+                while (!frontier.isEmpty() && paused == false && running == true) {
+                    Cell current = frontier.remove(0);
+                    int row = -1, col = -1;
+                    // find the row and col of the current cell
+                    for (int i = 0; i < explore.getMap().getRows(); i++) {
+                        for (int j = 0; j < explore.getMap().getCols(); j++) {
+                            if (explore.getMap().getCell(i, j) == current) {
+                                row = i;
+                                col = j;
+                                break;
+                            }
+                        }
+                    }
+                    boolean visited = explore.getMap().visit(row, col, this);
+                    if (visited) {
+                        // add the unvisited neighbors of the current cell to the frontier
+                        if (row > 0 && !explore.getMap().getCell(row - 1, col).isVisited()) {
+                            frontier.add(explore.getMap().getCell(row - 1, col));
+                        }
+                        if (row < explore.getMap().getRows() - 1 && !explore.getMap().getCell(row + 1, col).isVisited()) {
+                            frontier.add(explore.getMap().getCell(row + 1, col));
+                        }
+                        if (col > 0 && !explore.getMap().getCell(row, col - 1).isVisited()) {
+                            frontier.add(explore.getMap().getCell(row, col - 1));
+                        }
+                        if (col < explore.getMap().getCols() - 1 && !explore.getMap().getCell(row, col + 1).isVisited()) {
+                            frontier.add(explore.getMap().getCell(row, col + 1));
+                        }
+                        int sleepTime = (int) (Math.random() * 1000);
+                        try {
+                            Thread.sleep(sleepTime);
+                        } catch (InterruptedException e) {
+                            System.out.println("Robot " + name + " was interrupted while sleeping.");
+                        }
 
-                int row = (int) (Math.random() * explore.getMap().getRows());
-                int col = (int) (Math.random() * explore.getMap().getCols());
-                // Visit the cell
-                boolean visited = explore.getMap().visit(row, col, this);
-                if (visited) {
-                    // Make the robot sleep for some time
-                    int sleepTime = (int) (Math.random() * 1000);
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        System.out.println("Robot " + name + " was interrupted while sleeping.");
                     }
                 }
                 boolean allVisited = true;
@@ -81,9 +121,11 @@ public class Robot implements Runnable {
                     }
                 }
                 if (allVisited) {
-                    System.out.println("Robot " + name + " has finished exploring the map.");
+                    int count = getAddedTokens();
+                    System.out.println("Robot " + name + " has finished exploring the map and has placed " + count + " tokens.");
                     running = false;
                 }
+                    // Make the robot sleep for some time
             }
         }
     }
@@ -119,7 +161,7 @@ public class Robot implements Runnable {
     public void addTokens(List<Token> tokens) {
         sharedMemory.addTokens(tokens);
     }
-    public Collection<Token> getTokens() {
+    public List<Token> getTokens() {
         return sharedMemory.getTokens();
     }
 }

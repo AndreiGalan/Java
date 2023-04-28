@@ -21,7 +21,9 @@ public class ExplorationMap extends Thread{
             if (!cell.isVisited()) {
                 List<Token> tokens = robot.extractTokens(cell.getTokens());
                 robot.addTokens(tokens);
+                robot.increaseTokens();
                 cell.addTokens(tokens);
+                cell.setVisited(true); // mark the cell as visited
                 //System.out.println(robot.getName() + " has visited cell (" + row + "," + col + ")");
                 return true;
             }

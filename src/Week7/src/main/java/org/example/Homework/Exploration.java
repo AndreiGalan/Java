@@ -72,6 +72,20 @@ public class Exploration {
             robot.pause();
         }
     }
+
+    public void stopAllRobots(){
+        for (Robot robot : robots) {
+            robot.stop();
+        }
+    }
+
+    public void PrintTokensPerRobot(){
+        for (Robot robot : robots) {
+            List<Token> tokens = robot.getTokens();
+            int count = tokens.size();
+            System.out.println(robot.getName() + " placed " + count + " tokens.");
+        }
+    }
     public SharedMemory getSharedMemory() {
         return mem;
     }
@@ -86,7 +100,8 @@ public class Exploration {
         explore.addRobot(new Robot("Optimus Prime", explore));
         InputHandler inputHandler = new InputHandler(explore);
         inputHandler.start();
+        TimeKeeper timeKeeper = new TimeKeeper(explore);
+        timeKeeper.start();
         explore.start();
-        System.out.println("Press enter to exit.");
     }
 }

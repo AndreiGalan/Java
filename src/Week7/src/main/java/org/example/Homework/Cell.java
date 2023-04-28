@@ -33,4 +33,8 @@ public class Cell {
                 ", visited=" + visited +
                 '}';
     }
+
+    public void setVisited(boolean b) {
+        visited = b;
+    }
 }

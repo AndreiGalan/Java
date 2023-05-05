@@ -1,15 +1,15 @@
-package org.example.Homework;
+package org.example.Bonus;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import org.example.Bonus.DAO.ArtistDAO;
+import org.example.Bonus.DAO.GenreDAO;
+import org.example.Bonus.DAO.MusicAlbumDAO;
+import org.example.Bonus.Entities.Artist;
+import org.example.Bonus.Entities.Genre;
+import org.example.Bonus.Entities.MusicAlbum;
 import org.example.Compulsory.Database;
-import org.example.Homework.DAO.ArtistDAO;
-import org.example.Homework.DAO.GenreDAO;
-import org.example.Homework.DAO.MusicAlbumDAO;
-import org.example.Homework.Entities.Artist;
-import org.example.Homework.Entities.Genre;
-import org.example.Homework.Entities.MusicAlbum;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -13,7 +13,7 @@ public class Main {
             genres.create("Rock");
             genres.create("Funk");
             genres.create("Soul");
-            genres.create("Pop");//TODO: Funk, Soul, Pop
+            genres.create("Pop");
 
             Database.getConnection().commit();
 
@@ -23,7 +23,6 @@ public class Main {
 
             Database.getConnection().commit();
 
-            //TODO: print all the albums in the database
             var allAlbums = albums.findAll();
             for (Album album : allAlbums) {
                 System.out.println(album);
